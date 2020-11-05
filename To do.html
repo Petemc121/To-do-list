@@ -39,6 +39,10 @@ h1 {
     position:relative;
     top:190px;
 }
+
+.delete {
+    margin-left:5px;
+}
 </style>
 
 </head>
@@ -54,26 +58,59 @@ h1 {
     <button id="submit">Submit</button>
     </div>
 
-    <p id="output"></p>
+   <div id="output"></div>
+
 
     <script>
         var input = document.getElementById("boxInput");
         var output = document.getElementById("output")
         var submit = document.getElementById("submit")
         var i = 0;
+        
 
-        function displayVal() {
+        function addElement(parentId, elementTag, elementId, html) {
 
-          
             
-            i += 1;
-            output.innerHTML = output.innerHTML + "<P>" + i + "." + " " + input.value;
 
-          
+            var output = document.getElementById(parentId);
+            var newElement = document.createElement(elementTag); 
+            newElement.setAttribute('id', elementId);
+            newElement.innerHTML = html;
+            output.appendChild(newElement)
+
+            
+
+
+        }
+
+            var itemId = 0;
+
+        function additem() {
+
+            
+            i += 1
+
+            itemId++;
+           var html = i + ". " + input.value + " " + `<button onclick="javascript:removeElement('item-' + itemId + ''); return false;">X</button>`;
+
+         addElement("output", "p", "item-" + itemId, html);
+
         
         }
 
-        submit.addEventListener("click", displayVal);
+
+        function removeElement(elementId) {
+            var element = document.getElementById(elementId);
+            element.parentNode.removeChild(element);
+
+        }
+
+        
+
+        submit.addEventListener("click", additem);
+
+   
+
 
         
 
